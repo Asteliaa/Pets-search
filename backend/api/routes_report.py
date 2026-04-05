@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from backend.api.deps import get_db
 from backend.models.report import Report
+from backend.models.user import User
 from backend.schemas.report import ReportCreate, ReportResponse
 
 router = APIRouter(prefix="/reports", tags=["reports"])
@@ -10,6 +11,10 @@ router = APIRouter(prefix="/reports", tags=["reports"])
 
 @router.post("/", response_model=ReportResponse)
 def create_report(payload: ReportCreate, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == payload.user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
     report = Report(**payload.model_dump())
     db.add(report)
     db.commit()
