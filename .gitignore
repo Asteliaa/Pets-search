@@ -3,3 +3,5 @@ scructure.txt
 docker-compose.yml
 requirements.txt
 .vscode/
+__pycache__/
+*.py[cod]
