@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from backend.core.database import engine, Base
 from backend.api.routes_report import router as routes_report
+from backend.api.routes_users import router as routes_users
 from backend.models import user, report
 
 
@@ -24,3 +25,4 @@ def health():
 
 
 app.include_router(routes_report)
+app.include_router(routes_users)
